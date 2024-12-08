@@ -13,3 +13,19 @@ const tokenColors = {
   RegularExpression: '#89DDFF',
   Template: '#C3E88D',
 };
+
+const highlight = (input, codeBlock) => {
+  const tokens = esprima.tokenize(input);
+
+  for (const token of tokens) {
+    const { type, value } = token;
+    const tokenColor = tokenColors[type] || '#ffffff'; // * defaults to white
+
+    const tokenEl = document.createElement('span');
+    tokenEl.style.color = tokenColor;
+    tokenEl.textContent = value;
+    codeBlock.append(tokenEl);
+  }
+};
+
+highlight('const x = 10;', document.querySelector('code pre'));
